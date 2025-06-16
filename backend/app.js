@@ -6,6 +6,8 @@ import fileUpload from 'express-fileupload';
 import { connection } from './database/connection.js';
 import { errorMiddleware } from './middlewares/error.js';
 import userRoutes from './routes/userRoutes.js';
+import auctionRoutes from './routes/auctionRoutes.js';
+import bidRoutes from './routes/bidRouter.js';
 const app=express();
 config({
     path: './config/config.env'
@@ -24,6 +26,8 @@ app.use(fileUpload({
     tempFileDir: '/tmp/',
 }));
 app.use("/api/v1/user",userRoutes)
+app.use("/api/v1/auction",auctionRoutes)
+app.use("/api/v1/bid",bidRoutes)
 connection();
 app.use(errorMiddleware)
 

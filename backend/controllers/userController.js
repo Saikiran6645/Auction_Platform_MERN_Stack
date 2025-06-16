@@ -74,10 +74,33 @@ export const login = asyncHandler(async(req,res,next)=>{
     if(!user){
         return next(new ErrorHandler("Invalid email or password",401));
     }
-    const isPasswordMatched=await User.comparePassword(password);
+    const isPasswordMatched=await user.comparePassword(password);
     if(!isPasswordMatched){
         return next(new ErrorHandler("Invalid email or password",401));
     }
     generateToken(user,200,"user logged in successfully",res);
 
+})
+export const getProfile=asyncHandler(async(req,res,next)=>{
+    const user=req.user;
+    res.status(200).json({
+        success:true,
+        user
+    });
+})
+export const logout=asyncHandler(async(req,res,next)=>{
+    res.cookie("token","",{
+        expires:new Date(Date.now()),
+        httpOnly:true
+    }).json({
+        success:true,
+        message:"Logged out successfully"
+    });
+})
+export const leaderboard=asyncHandler(async(req,res,next)=>{
+    const leaderboard=await User.find({moneySpent:{$gt:0}}).sort({moneySpent:-1})
+    res.status(200).json({
+        success:true,
+        leaderboard
+    });
 })
