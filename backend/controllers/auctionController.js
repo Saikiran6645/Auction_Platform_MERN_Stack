@@ -4,6 +4,7 @@ import asyncHandler from "express-async-handler";
 import ErrorHandler from "../middlewares/error.js";
 import { User } from "../models/UserSchema.js";
 import mongoose from "mongoose";
+import { Bid } from "../models/bidSchema.js";
 
 export const createAuction = asyncHandler(async (req, res, next) => {
   if (!req.files || Object.values(req.files).length === 0) {
@@ -169,9 +170,18 @@ export const repulishAuction = asyncHandler(async (req, res, next) => {
   if (data.startTime >= data.endTime) {
     return next(new ErrorHandler("Start time must be before end time", 400));
   }
+  if (auction.highestBidder) {
+    const highestBidder = await User.findById(auction.highestBidder);
+    highestBidder.moneySpent -= auction.currentBid;
+    highestBidder.auctionsWon -= 1;
+    await highestBidder.save();
+  }
+
   data.bids = [];
   data.commissionCalculated = false;
   data.currentBid = 0;
+  data.highestBidder = null;
+  await Bid.deleteMany({ auctionItem: auction._id });
   auction = await Auction.findByIdAndUpdate(id, data, {
     new: true,
     runValidators: false,

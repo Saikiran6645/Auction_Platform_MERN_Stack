@@ -28,8 +28,13 @@ const proofOfCommissionSchema = mongoose.Schema({
     type: Date,
     default: Date.now,
   },
+  status: {
+    type: String,
+    default: "Pending",
+    enum: ["Pending", "Approved", "Rejected", "Settled"],
+  },
 });
-export const paymentProof = mongoose.model(
+export const PaymentProof = mongoose.model(
   "PaymentProof",
   proofOfCommissionSchema
 );
