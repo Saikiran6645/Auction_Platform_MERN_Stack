@@ -4,6 +4,7 @@ import DatePicker from "react-datepicker";
 import { useDispatch, useSelector } from "react-redux";
 import "react-datepicker/dist/react-datepicker.css";
 import Spinner from "../../custom-components/Spinner";
+import { useNavigate } from "react-router-dom";
 
 const CreateAuction = () => {
   const [image, setImage] = useState("");
@@ -40,6 +41,7 @@ const CreateAuction = () => {
   };
 
   const dispatch = useDispatch();
+  const navigate=useNavigate();
   const { loading } = useSelector((state) => state.auction);
 
   const handleCreateAuction = (e) => {
@@ -54,6 +56,7 @@ const CreateAuction = () => {
     formData.append("startTime", startTime);
     formData.append("endTime", endTime);
     dispatch(createAuction(formData));
+    navigate("/auctions")
   };
 
   const { isAuthenticated, user } = useSelector((state) => state.user);

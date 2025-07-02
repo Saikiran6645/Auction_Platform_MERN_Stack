@@ -27,9 +27,7 @@ const PaymentProofs = () => {
     if (singlePaymentProof && Object.keys(singlePaymentProof).length > 0) {
       setOpenDrawer(true);
     }
-    if (paymentProofs) {
-      console.log(paymentProofs);
-    }
+     
   }, [singlePaymentProof]);
 
   return (
@@ -92,9 +90,7 @@ export const Drawer = ({ setOpenDrawer, openDrawer }) => {
   const { singlePaymentProof, loading } = useSelector(
     (state) => state.superAdmin
   );
-  if (singlePaymentProof) {
-    console.log(singlePaymentProof);
-  }
+  
   const [amount, setAmount] = useState(singlePaymentProof.amount || "");
   const [status, setStatus] = useState(singlePaymentProof.status || "");
 

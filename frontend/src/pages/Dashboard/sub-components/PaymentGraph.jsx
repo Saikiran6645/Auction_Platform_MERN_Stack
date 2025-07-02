@@ -26,7 +26,7 @@ ChartJS.register(
 
 const PaymentGraph = () => {
   const { monthlyRevenue } = useSelector((state) => state.superAdmin);
-
+ 
   const data = {
     labels: [
       "January",

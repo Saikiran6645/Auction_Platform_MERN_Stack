@@ -23,7 +23,7 @@ const bidSlice = createSlice({
 });
 
 export const placeBid = (id, data) => async (dispatch) => {
-  console.log(data);
+ 
   dispatch(bidSlice.actions.bidRequest());
   try {
     const response = await api.post(`/bid/place/${id}`, data);

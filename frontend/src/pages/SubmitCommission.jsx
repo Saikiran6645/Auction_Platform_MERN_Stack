@@ -20,7 +20,7 @@ const SubmitCommission = () => {
     formData.append("proof", proof);
     formData.append("amount", amount);
     formData.append("comment", comment);
-    console.log(formData);
+    
     dispatch(postCommissionProof(formData));
   };
 

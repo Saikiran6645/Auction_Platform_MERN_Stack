@@ -36,13 +36,13 @@ const Leaderboard = () => {
                       </span>
                       <span>
                         <img
-                          src={element.profileImage?.url}
+                          src={element.profilePicture?.url}
                           alt={element.username}
                           className="h-12 w-12 object-cover rounded-full"
                         />
                       </span>
                     </td>
-                    <td className="py-2 px-4">{element.userName}</td>
+                    <td className="py-2 px-4">{element.username}</td>
                     <td className="py-2 px-4">{element.moneySpent}</td>
                     <td className="py-2 px-4">{element.auctionsWon}</td>
                   </tr>

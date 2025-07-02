@@ -1,213 +1,251 @@
-import React, { useState } from "react";
-import { RiAuctionFill } from "react-icons/ri";
+import React, { useState, useEffect } from "react";
+import { RiAuctionFill, RiInstagramFill } from "react-icons/ri";
 import { MdLeaderboard, MdDashboard } from "react-icons/md";
 import { SiGooglesearchconsole } from "react-icons/si";
 import { BsFillInfoSquareFill } from "react-icons/bs";
-import { FaFacebook } from "react-icons/fa";
-import { RiInstagramFill } from "react-icons/ri";
+import { FaFacebook, FaUserCircle } from "react-icons/fa";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { IoMdCloseCircleOutline, IoIosCreate } from "react-icons/io";
-import { FaUserCircle } from "react-icons/fa";
-import { FaFileInvoiceDollar } from "react-icons/fa6";
-import { FaEye } from "react-icons/fa";
+import { FaFileInvoiceDollar, FaEye } from "react-icons/fa6";
 import { logout } from "../store/slices/userSlices";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { useEffect } from "react";
 
 const SideDrawer = () => {
   const [show, setShow] = useState(false);
   const dispatch = useDispatch();
   const { isAuthenticated, user, role } = useSelector((state) => state.user);
-  useEffect(() => {
-    if (user) {
-      console.log(user);
-      console.log(isAuthenticated);
-    }
-  }, []);
+
   const handleLogout = () => {
     dispatch(logout());
   };
-  // if (isAuthenticated) {
-  //   console.log(user.user);
-  // }
+
+  // Prevent background scroll when drawer is open (mobile only)
+  useEffect(() => {
+    if (show) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [show]);
 
   return (
     <>
-      <div
-        onClick={() => setShow(!show)}
-        className="fixed top-5 right-5 rounded-md p-2 bg-amber-700 hover:bg-[#e1d9d8] lg:hidden "
+      {/* Hamburger Button */}
+      <button
+        onClick={() => setShow(true)}
+        className="fixed top-5 right-5 z-40 rounded-md p-3 bg-[#d6482b] text-white hover:bg-[#b8381e] lg:hidden shadow-md transition"
+        aria-label="Open Menu"
       >
-        <GiHamburgerMenu />
-      </div>
+        <GiHamburgerMenu size={24} />
+      </button>
+
+      {/* Backdrop for mobile */}
       <div
-        className={`w-[100%] sm:w-[300px] h-full fixed bg-[#9bbbe6] ${
+        className={`fixed inset-0 bg-black/40 z-30 transition-opacity duration-300 ${
           show
-            ? "left-0"
-            : "left-[-100%] transition-all duration-150 p-4 flex flex-col justify-between lg:left-0 border-r-[1px] border-r-stone-500"
-        } `}
+            ? "opacity-100 pointer-events-auto"
+            : "opacity-0 pointer-events-none"
+        } lg:hidden`}
+        onClick={() => setShow(false)}
+        aria-hidden="true"
+      />
+
+      {/* Side Drawer */}
+      <nav
+        className={`fixed top-0 left-0 z-50 h-full w-[88vw] max-w-[340px] bg-white/80 backdrop-blur-xl shadow-2xl border-r border-[#e3e1e8]
+        transition-transform duration-300 flex flex-col justify-between
+        ${show ? "translate-x-0" : "-translate-x-full"} 
+        lg:translate-x-0 lg:w-[300px] lg:block`}
       >
-        <div className="relative pl-5">
-          <Link to={"/"}>
-            <h4 className="text-2xl font-semibold mb-4">
-              Prime<span className="text-[#5e3c94]">Bid</span>
+        <div className="relative px-7 pt-8 pb-4 flex-1 flex flex-col">
+          {/* Close Button for mobile */}
+          <button
+            className="absolute top-3 right-3 text-[#d6482b] bg-white/70 rounded-full p-1 shadow-md lg:hidden"
+            onClick={() => setShow(false)}
+            aria-label="Close Menu"
+          >
+            <IoMdCloseCircleOutline size={28} />
+          </button>
+          {/* Logo */}
+          <Link to="/" onClick={() => setShow(false)}>
+            <h4 className="text-3xl font-extrabold mb-7 tracking-tight text-[#332e42]">
+              Prime<span className="text-[#d6482b]">Bid</span>
             </h4>
           </Link>
-          <ul className="flex flex-col  gap-3">
+          {/* Nav Links */}
+          <ul className="flex flex-col gap-3">
             <li>
               <Link
-                to={"/auctions"}
-                className="flex text-xl font-semibold items-center gap-2 hover:text-[#D6482b] hover:transition-all hover:duration-150"
+                to="/auctions"
+                onClick={() => setShow(false)}
+                className="flex items-center gap-3 text-lg font-semibold text-[#332e42] hover:text-[#d6482b] transition"
               >
-                <RiAuctionFill /> Auctions
+                <RiAuctionFill size={22} /> Auctions
               </Link>
             </li>
             <li>
               <Link
-                to={"/leaderboard"}
-                className="flex text-xl font-semibold items-center gap-2 hover:text-[#D6482b] hover:transition-all hover:duration-150"
+                to="/leaderboard"
+                onClick={() => setShow(false)}
+                className="flex items-center gap-3 text-lg font-semibold text-[#332e42] hover:text-[#d6482b] transition"
               >
-                <MdLeaderboard /> LeaderBoard
+                <MdLeaderboard size={22} /> LeaderBoard
               </Link>
             </li>
             {isAuthenticated && user && role === "Auctioneer" && (
               <>
                 <li>
                   <Link
-                    to={"/submitcommission"}
-                    className="flex text-xl font-semibold items-center gap-2 hover:text-[#D6482b] hover:transition-all hover:duration-150"
+                    to="/submitcommission"
+                    onClick={() => setShow(false)}
+                    className="flex items-center gap-3 text-lg font-semibold text-[#332e42] hover:text-[#d6482b] transition"
                   >
-                    <FaFileInvoiceDollar /> Submit Commission
+                    <FaFileInvoiceDollar size={20} /> Submit Commission
                   </Link>
                 </li>
                 <li>
                   <Link
-                    to={"/create-auction"}
-                    className="flex text-xl font-semibold items-center gap-2 hover:text-[#D6482b] hover:transition-all hover:duration-150"
+                    to="/create-auction"
+                    onClick={() => setShow(false)}
+                    className="flex items-center gap-3 text-lg font-semibold text-[#332e42] hover:text-[#d6482b] transition"
                   >
-                    <IoIosCreate /> Create Auction
+                    <IoIosCreate size={22} /> Create Auction
                   </Link>
                 </li>
                 <li>
                   <Link
-                    to={"/view-my-auctions"}
-                    className="flex text-xl font-semibold items-center gap-2 hover:text-[#D6482b] hover:transition-all hover:duration-150"
+                    to="/view-my-auctions"
+                    onClick={() => setShow(false)}
+                    className="flex items-center gap-3 text-lg font-semibold text-[#332e42] hover:text-[#d6482b] transition"
                   >
-                    <FaEye /> View My Auctions
+                    <FaEye size={20} /> View My Auctions
                   </Link>
                 </li>
               </>
             )}
             {isAuthenticated && user && role === "Super Admin" && (
-              <>
-                <li>
-                  <Link
-                    to={"/dashboard"}
-                    className="flex text-xl font-semibold items-center gap-2 hover:text-[#D6482b] hover:transition-all hover:duration-150"
-                  >
-                    <MdLeaderboard /> Dashboard
-                  </Link>
-                </li>
-              </>
+              <li>
+                <Link
+                  to="/dashboard"
+                  onClick={() => setShow(false)}
+                  className="flex items-center gap-3 text-lg font-semibold text-[#332e42] hover:text-[#d6482b] transition"
+                >
+                  <MdDashboard size={20} /> Dashboard
+                </Link>
+              </li>
             )}
           </ul>
-          {!isAuthenticated ? (
-            <>
-              <div className="flex gap-2 ">
+
+          {/* Auth Buttons */}
+          <div className="mt-7 mb-4 flex gap-2">
+            {!isAuthenticated ? (
+              <>
                 <Link
-                  to={"/signup"}
-                  className="bg-[#D6482B] font-semibold hover:bg-[#b8381e] text-xl py-1 px-4 rounded-md text-white"
+                  to="/signup"
+                  onClick={() => setShow(false)}
+                  className="bg-[#d6482b] font-bold text-white hover:bg-[#b8381e] px-5 py-2 rounded-lg transition text-base shadow"
                 >
                   Sign Up
                 </Link>
                 <Link
-                  to={"/login"}
-                  className="bg-transparent text-[#DECCBE] font-semibold  hover:bg-[#fffefd] hover:text-[#fdba88] text-xl py-1 px-4 rounded-md text-white border-2"
+                  to="/login"
+                  onClick={() => setShow(false)}
+                  className="border-2 border-[#d6482b] font-bold text-[#d6482b] bg-white px-5 py-2 rounded-lg hover:bg-[#f9e6e0] hover:text-[#b8381e] transition text-base shadow"
                 >
                   Login
                 </Link>
-              </div>
-            </>
-          ) : (
-            <>
-              <div className="my-4 flex gap-4 w-fit onClick={handleLogout">
-                <button
-                  className="bg-[#D6482B] font-semibold hover:bg-[#b8381e] text-xl py-1 px-4 rounded-md text-white"
-                  onClick={handleLogout}
-                >
-                  Logout
-                </button>
-              </div>
-            </>
-          )}
-          <hr className="mb-4 border-t-[#d6482b]"></hr>
-          <ul className="flex gap-4 flex-col">
+              </>
+            ) : (
+              <button
+                className="bg-[#d6482b] font-bold text-white hover:bg-[#b8381e] px-5 py-2 rounded-lg transition text-base shadow"
+                onClick={handleLogout}
+              >
+                Logout
+              </button>
+            )}
+          </div>
+          <hr className="mb-4 border-t-[#e3e1e8]" />
+          <ul className="flex flex-col gap-3">
             {isAuthenticated && (
               <li>
                 <Link
-                  to={"/me"}
-                  className="flex text-xl font-semibold gap-2 items-center hover:text-[#D6482b] hover:transition-all hover:duration-150"
+                  to="/me"
+                  onClick={() => setShow(false)}
+                  className="flex items-center gap-3 text-lg font-semibold text-[#332e42] hover:text-[#d6482b] transition"
                 >
-                  <FaUserCircle /> Profile
+                  <FaUserCircle size={20} /> Profile
                 </Link>
               </li>
             )}
             <li>
               <Link
-                to={"/howitworks"}
-                className="flex text-xl font-semibold gap-2 items-center hover:text-[#D6482b] hover:transition-all hover:duration-150"
+                to="/howitworks"
+                onClick={() => setShow(false)}
+                className="flex items-center gap-3 text-lg font-semibold text-[#332e42] hover:text-[#d6482b] transition"
               >
-                <SiGooglesearchconsole /> how it works
+                <SiGooglesearchconsole size={20} /> How it works
               </Link>
             </li>
             <li>
               <Link
-                to={"/about"}
-                className="flex text-xl font-semibold gap-2 items-center hover:text-[#D6482b] hover:transition-all hover:duration-150"
+                to="/about"
+                onClick={() => setShow(false)}
+                className="flex items-center gap-3 text-lg font-semibold text-[#332e42] hover:text-[#d6482b] transition"
               >
-                <BsFillInfoSquareFill /> About Us
+                <BsFillInfoSquareFill size={20} /> About Us
               </Link>
             </li>
           </ul>
-          <IoMdCloseCircleOutline
-            className="absolute top-0 right-4 text-[28px] sm:hidden "
-            onClick={() => setShow(!show)}
-          />
         </div>
-        <div>
-          <div className="flex gap-3 mt-3 items-center mb-2 pl-4">
-            <Link
-              to={"/"}
-              className="bg-white text-stone-500 p-2 text-x1 rounded-sm hover:text-blue-700"
+
+        {/* Footer */}
+        <div className="px-7 pb-6">
+          <div className="flex gap-4 mb-3">
+            <a
+              href="https://facebook.com/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="bg-white text-stone-500 p-2 rounded-full hover:text-blue-700 shadow hover:scale-110 transition"
+              aria-label="Facebook"
             >
-              <FaFacebook />
-            </Link>
-            <Link
-              to={"/instagram.com"}
-              className="bg-white text-stone-500 p-2 text-x1 rounded-sm hover:text-pink-700"
+              <FaFacebook size={18} />
+            </a>
+            <a
+              href="https://instagram.com/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="bg-white text-stone-500 p-2 rounded-full hover:text-pink-700 shadow hover:scale-110 transition"
+              aria-label="Instagram"
             >
-              <RiInstagramFill />
-            </Link>
+              <RiInstagramFill size={18} />
+            </a>
           </div>
-          <Link
-            to={"/contact"}
-            className="text-stone-500 font-semibold hover:text-[#d6482b] hover:transition-all hover:duration-150 pl-4"
+          {/* <Link
+            to="/contact"
+            onClick={() => setShow(false)}
+            className="block text-stone-600 font-semibold hover:text-[#d6482b] transition mb-1"
           >
             Contact Us
-          </Link>
-          <p className="text-stone-500 pl-4">&copy; PrimeBid, LLC.</p>
-          <p className="text-stone-500 pl-4">
-            {" "}
+          </Link> */}
+          <div className="text-xs text-stone-500 mb-1">
+            &copy; PrimeBid, LLC.
+          </div>
+          <div className="text-xs text-stone-500">
             Designed By{" "}
             <Link
-              to={"/"}
-              className="font-semibold hover:text-accent hover:transition-all hover:duration-150"
+              to="/"
+              className="font-semibold hover:text-[#d6482b] transition"
+              onClick={() => setShow(false)}
             >
               Sai Kiran
             </Link>
-          </p>
+          </div>
         </div>
-      </div>
+      </nav>
     </>
   );
 };

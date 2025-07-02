@@ -115,7 +115,7 @@ export const getMonthlyRevenue = () => async (dispatch) => {
     );
   } catch (error) {
     dispatch(superAdminSlice.actions.failedForMonthlyRevenue());
-    console.log(error);
+ 
     console.error(error.response.data.message);
   }
 };

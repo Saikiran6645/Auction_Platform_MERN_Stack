@@ -9,7 +9,7 @@ export const register = asyncHandler(async (req, res, next) => {
     return next(new ErrorHandler("profile photo is required", 400));
   }
   const { profilePhoto } = req.files;
-  console.log(profilePhoto);
+ 
 
   const allowedFileTypes = [
     "image/png",
@@ -88,7 +88,7 @@ export const register = asyncHandler(async (req, res, next) => {
   generateToken(user, 201, "user registered successfully", res);
 });
 export const login = asyncHandler(async (req, res, next) => {
-  console.log(req.body);
+
   const { email, password } = req.body;
   if (!email || !password) {
     return next(new ErrorHandler("Please fill all the fields", 400));

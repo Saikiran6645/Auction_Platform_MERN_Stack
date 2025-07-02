@@ -28,9 +28,7 @@ const AuctionItem = () => {
     dispatch(getAuctionDetail(id));
     setAmount("");
   };
-  if (auctionDetail) {
-    console.log(auctionBidders);
-  }
+
   useEffect(() => {
     if (id) {
       dispatch(getAuctionDetail(id));
@@ -84,6 +82,12 @@ const AuctionItem = () => {
                     Minimum Bid:{" "}
                     <span className="text-[#D6482B]">
                       Rs.{auctionDetail.startingPrice}
+                    </span>
+                  </p>
+                  <p className="text-xl font-semibold">
+                    CurrentBid:{" "}
+                    <span className="text-[#D6482B]">
+                      Rs.{auctionDetail.currentBid}
                     </span>
                   </p>
                 </div>
@@ -153,13 +157,13 @@ const AuctionItem = () => {
                   )
                 ) : Date.now() < new Date(auctionDetail.startTime) ? (
                   <img
-                    src="../../public/auction_not_start.png"
+                    src="/auction_not_start.png"
                     alt="not-started"
                     className="w-full max-h-[650px]"
                   />
                 ) : (
                   <img
-                    src="../../public/auction_ended.png"
+                    src="/auction_ended.png"
                     alt="ended"
                     className="w-full max-h-[650px]"
                   />

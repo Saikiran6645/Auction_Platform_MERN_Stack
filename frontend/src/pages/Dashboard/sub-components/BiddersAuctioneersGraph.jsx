@@ -28,6 +28,7 @@ const BiddersAuctioneersGraph = () => {
   const { totalAuctioneers, totalBidders } = useSelector(
     (state) => state.superAdmin
   );
+ 
   const data = {
     labels: [
       "January",

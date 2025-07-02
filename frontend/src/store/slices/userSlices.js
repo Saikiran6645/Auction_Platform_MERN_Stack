@@ -36,8 +36,10 @@ const userSlice = createSlice({
     loginSuccess(state, action) {
       state.loading = false;
       state.isAuthenticated = true;
-      state.role = action.payload.user.role;
-      state.user = action.payload.user;
+
+      state.user = action.payload;
+
+      state.role = action.payload.role;
     },
     loginFailed(state, action) {
       state.loading = false;
@@ -123,8 +125,11 @@ export const login = (data) => async (dispatch) => {
     const res = await api.post("/user/login", data, {
       headers: { "Content-Type": "multipart/form-data" },
     });
-    dispatch(userSlice.actions.loginSuccess(res.data));
-
+    if (res.data?.user?.success) {
+      dispatch(userSlice.actions.loginSuccess(res.data.user.user));
+    } else {
+      dispatch(userSlice.actions.loginSuccess(res.data.user));
+    }
     toast.success(res.data.message);
   } catch (error) {
     dispatch(userSlice.actions.loginFailed());
@@ -147,7 +152,8 @@ export const fetchLeaderboard = () => async (dispatch) => {
   dispatch(userSlice.actions.fetchLeaderboardRequest());
   try {
     const res = await api.get("/user/leaderboard");
-    dispatch(userSlice.actions.fetchLeaderboardSuccess(res.data));
+    
+    dispatch(userSlice.actions.fetchLeaderboardSuccess(res.data.leaderboard));
   } catch (error) {
     dispatch(userSlice.actions.fetchLeaderboardFailed());
     toast.error(error.response.data.message);

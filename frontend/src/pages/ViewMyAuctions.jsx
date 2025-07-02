@@ -16,9 +16,7 @@ const ViewMyAuctions = () => {
     }
     dispatch(getMyAuctionItems());
   }, [dispatch, isAuthenticated]);
-  if (myAuctions) {
-    console.log(myAuctions);
-  }
+   
 
   return (
     <>

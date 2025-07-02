@@ -5,11 +5,7 @@ import Card from "../../../custom-components/Card";
 
 const FeaturedAuctions = () => {
   const { allAuctions, loading } = useSelector((state) => state.auction);
-  useEffect(() => {
-    if (allAuctions) {
-      console.log(allAuctions);
-    }
-  }, []);
+  
   return (
     <>
       <section className="my-8">

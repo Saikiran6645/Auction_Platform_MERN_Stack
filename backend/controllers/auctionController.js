@@ -98,7 +98,7 @@ export const getAllItems = asyncHandler(async (req, res, next) => {
   });
 });
 export const getMyAuctionItems = asyncHandler(async (req, res, next) => {
-  console.log("here");
+  
   const auctions = await Auction.find({ createdBy: req.user._id });
   if (!auctions || auctions.length === 0) {
     return next(new ErrorHandler("No auctions found", 404));
