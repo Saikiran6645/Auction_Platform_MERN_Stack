@@ -27,13 +27,17 @@ const auctionSchema = new mongoose.Schema({
   },
   bids: [
     {
+      username: { type: String },
+      profilePicture: {
+        type: String,
+      },
+      amount: {
+        type: Number,
+      },
       userId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "Bid",
       },
-      username: String,
-      profileImage: String,
-      amount: Number,
     },
   ],
   createdBy: {

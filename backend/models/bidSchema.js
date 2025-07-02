@@ -13,11 +13,9 @@ const bidSchema = new mongoose.Schema({
     },
     username: {
       type: String,
-      required: true,
     },
     profilePicture: {
       type: String,
-      required: true,
     },
   },
   auctionItem: {

@@ -18,15 +18,19 @@ import { useEffect } from "react";
 const SideDrawer = () => {
   const [show, setShow] = useState(false);
   const dispatch = useDispatch();
-  const { isAuthenticated, user } = useSelector((state) => state.user);
+  const { isAuthenticated, user, role } = useSelector((state) => state.user);
   useEffect(() => {
     if (user) {
       console.log(user);
+      console.log(isAuthenticated);
     }
-  });
+  }, []);
   const handleLogout = () => {
     dispatch(logout());
   };
+  // if (isAuthenticated) {
+  //   console.log(user.user);
+  // }
 
   return (
     <>
@@ -66,7 +70,7 @@ const SideDrawer = () => {
                 <MdLeaderboard /> LeaderBoard
               </Link>
             </li>
-            {isAuthenticated && user && user.role === "Auctioneer" && (
+            {isAuthenticated && user && role === "Auctioneer" && (
               <>
                 <li>
                   <Link
@@ -84,9 +88,17 @@ const SideDrawer = () => {
                     <IoIosCreate /> Create Auction
                   </Link>
                 </li>
+                <li>
+                  <Link
+                    to={"/view-my-auctions"}
+                    className="flex text-xl font-semibold items-center gap-2 hover:text-[#D6482b] hover:transition-all hover:duration-150"
+                  >
+                    <FaEye /> View My Auctions
+                  </Link>
+                </li>
               </>
             )}
-            {isAuthenticated && user && user.role === "Super Admin" && (
+            {isAuthenticated && user && role === "Super Admin" && (
               <>
                 <li>
                   <Link
@@ -171,7 +183,7 @@ const SideDrawer = () => {
               <FaFacebook />
             </Link>
             <Link
-              to={"/contact"}
+              to={"/instagram.com"}
               className="bg-white text-stone-500 p-2 text-x1 rounded-sm hover:text-pink-700"
             >
               <RiInstagramFill />

@@ -2,6 +2,7 @@ import express from "express";
 import {
   createAuction,
   getAllItems,
+  getAuctionDetails,
   getMyAuctionItems,
   removeFromAuction,
   repulishAuction,
@@ -18,7 +19,6 @@ router.post(
   createAuction
 );
 router.get("/allitems", getAllItems);
-router.get("/auction/:id", isAuthenticated, getAllItems); // Assuming you want to get auction details by ID
 router.get(
   "/myitems",
   isAuthenticated,
@@ -38,4 +38,5 @@ router.delete(
   removeFromAuction
 );
 
+router.get("/:id", isAuthenticated, getAuctionDetails); // Assuming you want to get auction details by ID
 export default router;

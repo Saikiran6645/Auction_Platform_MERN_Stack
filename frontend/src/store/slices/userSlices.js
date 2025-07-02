@@ -6,8 +6,9 @@ const userSlice = createSlice({
   name: "user",
   initialState: {
     loading: false,
-    isAuthenticated: false,
+    isAuthenticated: null,
     user: {},
+    role: "",
     leaderboard: [],
   },
 
@@ -35,6 +36,7 @@ const userSlice = createSlice({
     loginSuccess(state, action) {
       state.loading = false;
       state.isAuthenticated = true;
+      state.role = action.payload.user.role;
       state.user = action.payload.user;
     },
     loginFailed(state, action) {
@@ -122,6 +124,7 @@ export const login = (data) => async (dispatch) => {
       headers: { "Content-Type": "multipart/form-data" },
     });
     dispatch(userSlice.actions.loginSuccess(res.data));
+
     toast.success(res.data.message);
   } catch (error) {
     dispatch(userSlice.actions.loginFailed());

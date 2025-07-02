@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import FeaturedAuctions from "./home-su-components/FeaturedAuctions";
 import UpcomingAuctions from "./home-su-components/UpcomingAuctions";
+import Leaderboard from "./home-su-components/Leaderboard";
 
 const Home = () => {
   const howItWorks = [
@@ -74,6 +75,7 @@ const Home = () => {
         </div>
         <FeaturedAuctions />
         <UpcomingAuctions />
+        <Leaderboard />
       </section>
     </>
   );

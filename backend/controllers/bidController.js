@@ -17,6 +17,7 @@ export const placeBid = expressAsyncHandler(async (req, res, next) => {
     return next(new ErrorHandler("Auction item not found.", 404));
   }
   const { amount } = req.body;
+  // console.log(amount);
   if (!amount || amount <= 0) {
     return next(new ErrorHandler("Please provide a valid bid amount.", 400));
   }
@@ -25,7 +26,7 @@ export const placeBid = expressAsyncHandler(async (req, res, next) => {
       new ErrorHandler("Bid amount must be greater than the current bid.", 400)
     );
   }
-  if (amount <= auctionItem.startingBid) {
+  if (amount <= auctionItem.startingPrice) {
     return next(
       new ErrorHandler("Bid amount must be greater than the starting bid.", 400)
     );
@@ -36,7 +37,7 @@ export const placeBid = expressAsyncHandler(async (req, res, next) => {
       "bidder.id": req.user._id,
       auctionItem: auctionItem._id,
     });
-    console.log(auctionItem)
+    // console.log(auctionItem);
 
     const existingBidAuction = auctionItem.bids.find(
       (bid) => bid.userId.toString() === req.user._id.toString()
@@ -71,7 +72,9 @@ export const placeBid = expressAsyncHandler(async (req, res, next) => {
       });
       auctionItem.currentBid = amount;
     }
+
     auctionItem.save();
+    console.log(auctionItem);
     res.status(200).json({
       success: true,
       message: "Bid placed successfully.",

@@ -28,7 +28,7 @@ export const getAllPaymentProofs = expressAsyncHandler(
     }
     res.status(200).json({
       success: true,
-      proofs,
+      paymentProofs: proofs,
     });
   }
 );
@@ -44,7 +44,7 @@ export const getAllPaymentProofsDetails = expressAsyncHandler(
     }
     res.status(200).json({
       success: true,
-      proofs,
+      paymentProofDetail: proofs,
     });
   }
 );
@@ -61,13 +61,13 @@ export const updateProofStatus = expressAsyncHandler(async (req, res, next) => {
   if (!amount || !status) {
     return next(new ErrorHandler("Please provide amount and status", 400));
   }
-  await paymentProofItem.findByIdAndUpdate(
+  await PaymentProof.findByIdAndUpdate(
     id,
     {
       amount,
       status,
     },
-    { new: true, runValidators: true, useFindAndModify: false }
+    { new: true, runValidators: true }
   );
   res.status(200).json({
     success: true,
@@ -139,8 +139,8 @@ export const fetchAllUsers = expressAsyncHandler(async (req, res, next) => {
 
   res.status(200).json({
     success: true,
-    bidders: biddersData,
-    auctioneers: auctioneersData,
+    biddersArray: biddersData,
+    auctioneersArray: auctioneersData,
   });
 });
 export const monthlyRevenue = expressAsyncHandler(async (req, res, next) => {
@@ -170,6 +170,7 @@ export const monthlyRevenue = expressAsyncHandler(async (req, res, next) => {
   };
 
   const totalMonthlyRevenue = tranformDataToMonthlyArray(payments);
+
   res.status(200).json({
     success: true,
     totalMonthlyRevenue,

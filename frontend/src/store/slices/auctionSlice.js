@@ -105,10 +105,8 @@ export const getAllAuctionItems = () => async (dispatch) => {
 export const getMyAuctionItems = () => async (dispatch) => {
   dispatch(auctionSlice.actions.getMyAuctionsRequest());
   try {
-    const response = await api.get("/auctionitem/myitems", {
-      withCredentials: true,
-    });
-    dispatch(auctionSlice.actions.getMyAuctionsSuccess(response.data.items));
+    const response = await api.get("/auction/myitems");
+    dispatch(auctionSlice.actions.getMyAuctionsSuccess(response.data.auctions));
     dispatch(auctionSlice.actions.resetSlice());
   } catch (error) {
     dispatch(auctionSlice.actions.getMyAuctionsFailed());
@@ -120,10 +118,10 @@ export const getMyAuctionItems = () => async (dispatch) => {
 export const getAuctionDetail = (id) => async (dispatch) => {
   dispatch(auctionSlice.actions.getAuctionDetailRequest());
   try {
-    const response = await api.get(`/auctionitem/auction/${id}`, {
-      withCredentials: true,
-    });
+    const response = await api.get(`/auction/${id}`);
+
     dispatch(auctionSlice.actions.getAuctionDetailSuccess(response.data));
+
     dispatch(auctionSlice.actions.resetSlice());
   } catch (error) {
     dispatch(auctionSlice.actions.getAuctionDetailFailed());
@@ -135,7 +133,7 @@ export const getAuctionDetail = (id) => async (dispatch) => {
 export const createAuction = (data) => async (dispatch) => {
   dispatch(auctionSlice.actions.createAuctionRequest());
   try {
-    const response = await api.post("/auctionitem/create", data, {
+    const response = await api.post("/auction/create", data, {
       withCredentials: true,
       headers: { "Content-Type": "multipart/form-data" },
     });
@@ -153,7 +151,7 @@ export const createAuction = (data) => async (dispatch) => {
 export const republishAuction = (id, data) => async (dispatch) => {
   dispatch(auctionSlice.actions.republishItemRequest());
   try {
-    const response = await api.put(`/auctionitem/item/republish/${id}`, data, {
+    const response = await api.put(`/auction/republish/${id}`, data, {
       headers: { "Content-Type": "application/json" },
     });
     dispatch(auctionSlice.actions.republishItemSuccess());
@@ -172,7 +170,7 @@ export const republishAuction = (id, data) => async (dispatch) => {
 export const deleteAuction = (id) => async (dispatch) => {
   dispatch(auctionSlice.actions.deleteAuctionItemRequest());
   try {
-    const response = await api.delete(`auctionitem/delete/${id}`);
+    const response = await api.delete(`auction/remove/${id}`);
     dispatch(auctionSlice.actions.deleteAuctionItemSuccess());
     toast.success(response.data.message);
     dispatch(getMyAuctionItems());
