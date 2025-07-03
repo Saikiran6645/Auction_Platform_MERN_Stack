@@ -15,7 +15,7 @@ const SideDrawer = () => {
   const [show, setShow] = useState(false);
   const dispatch = useDispatch();
   const { isAuthenticated, user, role } = useSelector((state) => state.user);
-
+  console.log("user:", user, "role", role);
   const handleLogout = () => {
     dispatch(logout());
   };

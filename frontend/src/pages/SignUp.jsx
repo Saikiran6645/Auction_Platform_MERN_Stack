@@ -20,7 +20,7 @@ const SignUp = () => {
   const { loading, isAuthenticated } = useSelector((state) => state.user);
   const navigateTo = useNavigate();
   const dispatch = useDispatch();
-
+  
   const handleRegister = (e) => {
     e.preventDefault();
     const formData = new FormData();
@@ -45,7 +45,7 @@ const SignUp = () => {
     if (isAuthenticated) {
       navigateTo("/");
     }
-  }, [dispatch, loading, isAuthenticated, navigateTo]);
+  }, [dispatch, loading, isAuthenticated]);
 
   const imageHandler = (e) => {
     const file = e.target.files[0];

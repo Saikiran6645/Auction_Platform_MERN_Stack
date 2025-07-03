@@ -22,6 +22,7 @@ const userSlice = createSlice({
       state.loading = false;
       state.isAuthenticated = true;
       state.user = action.payload.user;
+      state.role = action.payload.user.role;
     },
     registerFailed(state, action) {
       state.loading = false;
@@ -122,6 +123,7 @@ export const register = (data) => async (dispatch) => {
 export const login = (data) => async (dispatch) => {
   dispatch(userSlice.actions.loginRequest());
   try {
+    console.log(data);
     const res = await api.post("/user/login", data, {
       headers: { "Content-Type": "multipart/form-data" },
     });
@@ -152,7 +154,7 @@ export const fetchLeaderboard = () => async (dispatch) => {
   dispatch(userSlice.actions.fetchLeaderboardRequest());
   try {
     const res = await api.get("/user/leaderboard");
-    
+
     dispatch(userSlice.actions.fetchLeaderboardSuccess(res.data.leaderboard));
   } catch (error) {
     dispatch(userSlice.actions.fetchLeaderboardFailed());

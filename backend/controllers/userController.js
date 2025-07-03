@@ -9,7 +9,6 @@ export const register = asyncHandler(async (req, res, next) => {
     return next(new ErrorHandler("profile photo is required", 400));
   }
   const { profilePhoto } = req.files;
- 
 
   const allowedFileTypes = [
     "image/png",
@@ -37,6 +36,7 @@ export const register = asyncHandler(async (req, res, next) => {
   if (!email || !password || !username || !address || !phone || !role) {
     return next(new ErrorHandler("Please fill all the fields", 400));
   }
+
   if (role === "Auctioneer") {
     if (!bankAccountNumber || !bankAccountName || !bankName) {
       return next(new ErrorHandler("Please fill bank details", 400));
@@ -45,10 +45,12 @@ export const register = asyncHandler(async (req, res, next) => {
       return next(new ErrorHandler("Please fill paypal details", 400));
     }
   }
+
   const existingUser = await User.findOne({ email });
   if (existingUser) {
     return next(new ErrorHandler("User already exists", 400));
   }
+
   const cloudinaryResponse = await cloudinary.uploader.upload(
     profilePhoto.tempFilePath,
     {
@@ -61,7 +63,7 @@ export const register = asyncHandler(async (req, res, next) => {
       new ErrorHandler("failed to upload profile picture to cloudinary", 500)
     );
   }
-
+  console.log("here");
   const user = await User.create({
     username,
     email,
@@ -84,20 +86,25 @@ export const register = asyncHandler(async (req, res, next) => {
     },
     role,
   });
+  console.log(user);
 
   generateToken(user, 201, "user registered successfully", res);
 });
 export const login = asyncHandler(async (req, res, next) => {
-
   const { email, password } = req.body;
   if (!email || !password) {
     return next(new ErrorHandler("Please fill all the fields", 400));
   }
+  console.log(req.body);
+
   const user = await User.findOne({ email }).select("+password");
+  console.log(user);
+
   if (!user) {
     return next(new ErrorHandler("Invalid email or password", 401));
   }
   const isPasswordMatched = await user.comparePassword(password);
+  console.log(isPasswordMatched);
   if (!isPasswordMatched) {
     return next(new ErrorHandler("Invalid email or password", 401));
   }
