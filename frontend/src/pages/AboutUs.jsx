@@ -39,7 +39,7 @@ const About = () => {
           </h1>
           <p className="text-xl text-stone-600">
             Welcome to PrimeBid, the ultimate destination for online auctions
-            and bidding excitement. Founded in 2024, we are dedicated to
+            and bidding excitement. Founded in 2025, we are dedicated to
             providing a dynamic and user-friendly platform for buyers and
             sellers to connect, explore, and transact in a secure and seamless
             environment.
