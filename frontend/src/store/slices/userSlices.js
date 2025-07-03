@@ -102,7 +102,7 @@ export const logout = () => async (dispatch) => {
     dispatch(userSlice.actions.clearAllErrors());
   } catch (error) {
     dispatch(userSlice.actions.logoutFailed());
-    toast.error(error.response.data.message);
+    toast.error(error.response?.data?.message);
     dispatch(userSlice.actions.clearAllErrors());
   }
 };

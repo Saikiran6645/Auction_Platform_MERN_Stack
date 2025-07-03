@@ -40,7 +40,7 @@ const Home = () => {
             {!isAuthenticated && (
               <>
                 <Link
-                  to={"sign-up"}
+                  to={"signup"}
                   className="bg-[#d6482b] font-semibold hover:bg-[#3e413e] rounded-md px-8 flex items-center py-2 text-white  transition-all duration-300"
                 >
                   Sign Up
