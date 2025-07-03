@@ -22,6 +22,7 @@ const userSlice = createSlice({
       state.loading = false;
       state.isAuthenticated = true;
       state.user = action.payload.user;
+      state.role = action.payload.role;
     },
     registerFailed(state, action) {
       state.loading = false;
@@ -152,7 +153,7 @@ export const fetchLeaderboard = () => async (dispatch) => {
   dispatch(userSlice.actions.fetchLeaderboardRequest());
   try {
     const res = await api.get("/user/leaderboard");
-    
+
     dispatch(userSlice.actions.fetchLeaderboardSuccess(res.data.leaderboard));
   } catch (error) {
     dispatch(userSlice.actions.fetchLeaderboardFailed());
