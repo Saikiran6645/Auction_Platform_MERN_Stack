@@ -14,7 +14,7 @@ import Spinner from "../custom-components/Spinner";
 const Home = lazy(() => import("./pages/Home"));
 const SignUp = lazy(() => import("./pages/SignUp"));
 const Login = lazy(() => import("./pages/Login"));
-const SubmitCommission = lazy(() => import("./pages/submitCommission"));
+const SubmitCommission = lazy(() => import("./pages/SubmitCommission"));
 const HowItWorks = lazy(() => import("./pages/HowItWorks"));
 const Leaderboard = lazy(() => import("./pages/LeaderBoard"));
 const Auctions = lazy(() => import("./pages/Auctions"));
@@ -28,8 +28,6 @@ function App() {
   const dispatch = useDispatch();
   // const { user } = useSelector((state) => state.user);
   useEffect(() => {
-   
-
     dispatch(fetchLeaderboard());
     dispatch(getAllAuctionItems());
   }, [dispatch]);
