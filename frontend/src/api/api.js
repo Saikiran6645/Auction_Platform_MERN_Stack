@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: "http://localhost:5000/api/v1",
+  baseURL: "https://auction-platform-mern-stack-1.onrender.com",
   withCredentials: true,
 });
 
