@@ -22,7 +22,7 @@ const userSlice = createSlice({
       state.loading = false;
       state.isAuthenticated = true;
       state.user = action.payload.user;
-      state.role = action.payload.role;
+      state.role = action.payload.user.role;
     },
     registerFailed(state, action) {
       state.loading = false;

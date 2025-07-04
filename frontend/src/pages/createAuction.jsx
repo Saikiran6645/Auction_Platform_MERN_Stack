@@ -41,7 +41,7 @@ const CreateAuction = () => {
   };
 
   const dispatch = useDispatch();
-  const navigate=useNavigate();
+  const navigate = useNavigate();
   const { loading } = useSelector((state) => state.auction);
 
   const handleCreateAuction = (e) => {
@@ -56,14 +56,13 @@ const CreateAuction = () => {
     formData.append("startTime", startTime);
     formData.append("endTime", endTime);
     dispatch(createAuction(formData));
-    navigate("/auctions")
+    // navigate("/auctions")
   };
 
   const { isAuthenticated, user } = useSelector((state) => state.user);
 
   return (
     <article className="w-full ml-0 m-0 h-fit px-5 pt-20 lg:pl-[320px] flex flex-col">
-     
       <h1
         className={`text-[#d6482b] text-2xl font-bold mb-2 min-[480px]:text-4xl md:text-6xl xl:text-7xl 2xl:text-8xl`}
       >
