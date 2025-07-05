@@ -28,7 +28,7 @@ const BiddersAuctioneersGraph = () => {
   const { totalAuctioneers, totalBidders } = useSelector(
     (state) => state.superAdmin
   );
- 
+
   const data = {
     labels: [
       "January",
@@ -64,7 +64,7 @@ const BiddersAuctioneersGraph = () => {
     scales: {
       y: {
         beginAtZero: true,
-        max: 5,
+        max: 50,
         ticks: {
           callback: function (value) {
             return value.toLocaleString();
