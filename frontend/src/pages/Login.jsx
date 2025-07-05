@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-import { login } from "../store/slices/userSlices";
+import { fetchLeaderboard, login } from "../store/slices/userSlices";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -22,6 +22,7 @@ const Login = () => {
 
   useEffect(() => {
     if (isAuthenticated) {
+      dispatch(fetchLeaderboard());
       navigateTo("/");
     }
   }, [dispatch, isAuthenticated, loading]);
