@@ -35,7 +35,7 @@ A full-featured online auction platform that allows users to create listings, pl
 - Seller: Manage your listings and view bidding analytics
 - Buyer: Track your bids, winnings, and active watchlist
 
-### 📑 Admin Panel (Optional)
+### 📑 Admin Panel 
 - Manage all users, listings, categories
 - Flag or ban fraudulent users
 - Site-wide analytics
