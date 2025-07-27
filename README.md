@@ -44,7 +44,7 @@ A full-featured online auction platform that allows users to create listings, pl
 
 ## 🛠️ Tech Stack
 
-> This is an example. Replace according to your stack.
+
 
 **Frontend:**
 - React.js 
